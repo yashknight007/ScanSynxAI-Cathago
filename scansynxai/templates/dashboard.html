@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | ScanSynxAI</title>
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <script>
+        const profileViewUrl = "{% url 'profile' %}";
+        const getUploadedDocumentsUrl = "{% url 'get_uploaded_documents' %}";
+        const scanUploadUrl = "{% url 'scan_upload' %}";
+        const requestCreditsUrl = "{% url 'request_credits' %}";
+        const findMatchesUrl = "/matches/"; 
+    </script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="profile-section">
+            <h2>Profile</h2>
+            <p id="username"></p>
+            <p id="credits"></p>
+        </div>
+
+        <div class="upload-section">
+            <h2>Upload Document</h2>
+            <form id="uploadForm" enctype="multipart/form-data">
+                <input type="file" name="file" accept=".pdf" required>
+                <button type="submit" class="btn">Upload</button>
+            </form>
+            <div id="uploadMessage"></div>
+        </div>
+
+        <div class="credit-request-section">
+            <h2>Request Credits</h2>
+            <form id="creditRequestForm">
+                <input type="number" name="requested_credits" min="1" placeholder="Number of credits" required>
+                <button type="submit" class="btn">Request</button>
+            </form>
+            <div id="creditRequestMessage"></div>
+        </div>
+
+        <div class="uploaded-documents-section">
+            <h2>Your Uploaded Documents</h2>
+            <ul id="uploadedDocumentsList"></ul>
+            <button onclick="downloadScanHistory()" class="btn">Download Scan History</button>
+        </div>
+
+        <div class="matches-section">
+            <h2>Document Matches</h2>
+            <select id="documentSelect">
+                <option value="">Select a document</option>
+            </select>
+            <ul id="matchesList"></ul>
+        </div>
+    </div>
+
+    <script src="{% static 'js/dashboard.js' %}"></script>
+</body>
+</html>
