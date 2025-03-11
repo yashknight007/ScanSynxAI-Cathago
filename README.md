@@ -1,7 +1,7 @@
 
 # ScanSynxAI
 
-Hii !, need help with documents scanning and matching. Here we are get 20 free credits to scan and match them powered with Bert Ai.
+Hii ! DO you need help with documents scanning and matching? Here we are get 20 free credits to scan and match them powered with Bert Ai.
 
 ## ✔ User Authentication
 With Django's powerful built in ORM for User Authentication and Admin Panel. Its Safe and Secure. With Profile Section to display user credits, past scans, and requests.
