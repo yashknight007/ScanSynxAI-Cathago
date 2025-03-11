@@ -84,7 +84,7 @@ python manage.py runserver
 ```
 ## 🚀Visit: http://127.0.0.1:8000
 ## 🎥 Project Demo
-🔗 [Watch Demo on Google Drive]([https://drive.google.com/file/d/VIDEO_ID/view](https://drive.google.com/file/d/1s2XDhonIIWJBxpa5cjWYezloFOOPJbtA/view?usp=sharing))
+🔗 [Watch Demo on Google Drive](https://drive.google.com/file/d/1s2XDhonIIWJBxpa5cjWYezloFOOPJbtA/view?usp=sharing)
 
 
 
