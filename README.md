@@ -47,3 +47,44 @@ Generate credit usage statistics for admins
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
 
+## 🛠 Installation Guide
+
+🔹 1. Clone the Repository  
+```sh
+git clone https://github.com/yashknight007/ScanSynxAI-Cathago.git
+```
+🔹 2. Create & Activate Virtual Environment
+```sh
+# Create virtual environment (Windows)
+python -m venv .venv
+
+# Activate virtual environment (Windows)
+.venv\Scripts\activate
+
+# Activate virtual environment (Mac/Linux)
+source .venv/bin/activate
+```
+🔹 3. Install Dependencies
+```sh
+pip install -r requirements.txt
+```
+🔹 4. Apply Migrations
+```sh
+cd ScanSynxAI
+python manage.py makemigrations
+python manage.py migrate
+```
+🔹 5. Create Superuser (For Admin Panel)
+```sh
+python manage.py createsuperuser
+```
+🔹 6. Run the Development Server
+```sh
+python manage.py runserver
+```
+## 🚀Visit: http://127.0.0.1:8000
+
+
+
+
+
