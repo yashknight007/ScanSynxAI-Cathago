@@ -86,6 +86,45 @@ python manage.py runserver
 ## 🎥 Project Demo
 🔗 [Watch Demo on Google Drive](https://drive.google.com/file/d/1s2XDhonIIWJBxpa5cjWYezloFOOPJbtA/view?usp=sharing)
 
+## 🔍 API Testing
+```sh
+C:\Users\yashk>curl -X POST http://127.0.0.1:8000/auth/register/ -H "Content-Type: application/json" -d "{\"username\": \"testuser\", \"email\": \"test@example.com\", \"password\": \"testpass\"}"
+{"error": "Username already taken"}
+
+C:\Users\yashk>curl -X POST "http://127.0.0.1:8000/auth/login/" -H "Content-Type: application/json" -d "{\"username\": \"testuser\", \"password\": \"testpass\"}" -c cookies.txt
+{"message": "Login successful"}
+
+C:\Users\yashk>curl -X GET "http://127.0.0.1:8000/user/profile/" -H "Content-Type: application/json" -b cookies.txt
+{"username": "testuser", "credits": 39}
+
+C:\Users\yashk>curl -X POST "http://127.0.0.1:8000/scan/upload/" -F "file=@C:\Users\yashk\OneDrive\Documents\gfgcertificate.pdf" -b cookies.txt
+{"message": "File uploaded successfully", "file_path": "/media/uploads/gfgcertificate_eBoYkAB.pdf", "remaining_credits": 38}
+
+C:\Users\yashk>curl -X GET "http://127.0.0.1:8000/documents/" -b cookies.txt
+{"documents": [{"id": 1, "file": "uploads/Yashx.pdf", "uploaded_at": "2025-03-06T02:06:51.935Z"}, {"id": 2, "file": "uploads/Yashx_WitV0u5.pdf", "uploaded_at": "2025-03-06T02:06:55.904Z"}, {"id": 3, "file": "uploads/gfgcertificate.pdf", "uploaded_at": "2025-03-06T04:02:48.963Z"}, {"id": 4, "file": "uploads/Offer letter_CSRBOX_signed.pdf", "uploaded_at": "2025-03-09T12:30:37.282Z"}
+
+C:\Users\yashk>curl -X GET "http://127.0.0.1:8000/matches/1/" -b cookies.txt
+{"doc_id": 1, "matches": [{"matched_document_id": 2, "tfidf_score": 1.000000000000001, "ai_score": 0.9999998211860657, "ocr_score": 1.000000000000013}, {"matched_document_id": 3, "tfidf_score": 0.021885171210384285, "ai_score": 0.2797359824180603, "ocr_score": 0.02157162670707309}, {"matched_document_id": 4, "tfidf_score": 0.03217790257946981, "ai_score": 0.2590469717979431, "ocr_score": null}
+
+C:\Users\yashk>curl -X POST "http://127.0.0.1:8000/credits/request" -H "Content-Type: application/json" -d "{\"requested_credits\": 10}" -b cookies.txt
+{"message": "Credit request submitted successfully", "requested_credits": 10, "status": "pending"}
+```
+For Admin 
+```sh
+To find csrf token 
+C:\Users\yashk>curl -c cookies.txt -b cookies.txt -s "http://127.0.0.1:8000/admin/login/" | findstr csrfmiddlewaretoken
+<form action="/admin/login/" method="post" id="login-form"><input type="hidden" name="csrfmiddlewaretoken" value="zQaE1NwSEt8NQnPuYSVwOKmKQ5SdNDAJqX1FRym5bvWM2bshFXG6b1eOPUpEi407">
+
+C:\Users\yashk>curl -X POST "http://127.0.0.1:8000/admin/login/" ^
+More?      -H "Content-Type: application/x-www-form-urlencoded" ^
+More?      -H "Referer: http://127.0.0.1:8000/admin/login/" ^
+More?      -H "X-CSRFToken: zJ6OPHujRruV6JmATPou9MWLDJWMiTy1mInR6VqQIlIYgEv2JPrud4h8LR7E122M" ^
+More?      -b cookies.txt -c cookies.txt ^
+More?      --data "csrfmiddlewaretoken=zQaE1NwSEt8NQnPuYSVwOKmKQ5SdNDAJqX1FRym5bvWM2bshFXG6b1eOPUpEi407&username=yashk&password=Y@shking3"
+
+C:\Users\yashk>curl -b cookies.txt -X GET http://127.0.0.1:8000/admin/analytics/
+{"analytics": {"total_users": 2, "total_documents_uploaded": 6, "total_credit_requests": 3, "approved_credit_requests": 2, "pending_credit_requests": 1,
+```
 
 
 
