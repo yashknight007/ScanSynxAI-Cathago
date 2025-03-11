@@ -7,7 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.timezone import now
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
-from docs.models import UploadedDocument, Match  # Import your models
+from docs.models import UploadedDocument, UserProfile  # Import your models
 from django.utils import timezone
 from docs.models import CreditRequest,DocumentScan,CreditUsage
 from django.contrib.admin.views.decorators import staff_member_required
@@ -108,9 +108,13 @@ def list_credit_requests(request):
 @login_required
 def scan_upload(request):
     if request.method == "POST":
-        # Check if the user has enough credits
-        credits = request.session.get("credits", 0)
-        if credits <= 0:
+        # Ensure the user is authenticated
+        if not request.user.is_authenticated:
+            return JsonResponse({"error": "User not authenticated"}, status=401)
+
+        # Fetch user profile and check credits
+        user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+        if user_profile.credits <= 0:
             return JsonResponse({"error": "Insufficient credits"}, status=400)
 
         # Handle file upload
@@ -126,20 +130,22 @@ def scan_upload(request):
         document = UploadedDocument.objects.create(
             file=file_path,  
             uploaded_at=timezone.now(),
-            user=request.user  # Associate with the logged-in user
+            user=request.user  
         )
         document.save()
 
-        # Deduct 1 credit
-        request.session["credits"] = credits - 1
+        # Deduct 1 credit and save
+        user_profile.credits -= 1
+        user_profile.save()
 
         return JsonResponse({
             "message": "File uploaded successfully",
             "file_path": document.file.url,
-            "remaining_credits": request.session["credits"]
+            "remaining_credits": user_profile.credits
         })
 
     return JsonResponse({"error": "Invalid request method"}, status=405)
+
 
 
 def get_uploaded_documents(request):
